@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "message": "Provider event received and processed idempotently.",
+  "data": {
+    "event_id": "EVT-MOCK-CB-994812",
+    "event_type": "POLICY_ISSUED",
+    "provider_reference": "INS-ASYNC-B762HN1P",
+    "processed": true,
+    "processed_at": "2025-05-01T10:15:00.000000Z"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "message": "Policy request successfully created and premium snapshot calculated.",
+  "is_duplicate": false,
+  "data": {
+    "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+    "client_request_id": "CR-TRIPPER-2025-001",
+    "agent_id": "AGENT-MUMBAI-01",
+    "customer_name": "Rohan Deshmukh",
+    "date_of_birth": "1995-05-15",
+    "destination": "INTERNATIONAL",
+    "trip_start": "2025-06-01",
+    "trip_end": "2025-06-05",
+    "plan_code": "PLUS",
+    "sum_insured": 300000,
+    "travel_days": 5,
+    "customer_age": 30,
+    "premium_amount": "225.00",
+    "currency": "INR",
+    "calculation_breakdown": {
+      "travel_days": 5,
+      "customer_age": 30,
+      "base_daily_rate": "20.00",
+      "age_multiplier": "1.00",
+      "destination_multiplier": "1.80",
+      "coverage_multiplier": "1.25",
+      "premium_amount": "225.00",
+      "currency": "INR"
+    },
+    "status": "RECEIVED",
+    "provider_reference": null,
+    "policy_number": null,
+    "attempt_count": 0,
+    "last_attempted_at": null,
+    "issued_at": null,
+    "created_at": "2025-05-01T10:00:00.000000Z",
+    "updated_at": "2025-05-01T10:00:00.000000Z"
+  }
+}

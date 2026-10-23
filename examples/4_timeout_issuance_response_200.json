@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "message": "Issuance submitted. Current status: NEEDS_RECONCILIATION",
+  "data": {
+    "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+    "client_request_id": "CR-TRIPPER-2025-001",
+    "agent_id": "AGENT-MUMBAI-01",
+    "customer_name": "Rohan Deshmukh",
+    "status": "NEEDS_RECONCILIATION",
+    "premium_amount": "225.00",
+    "currency": "INR",
+    "provider_reference": null,
+    "policy_number": null,
+    "attempt_count": 1,
+    "last_attempted_at": "2025-05-01T10:10:00.000000Z",
+    "issued_at": null
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "client_request_id": "CR-TRIPPER-2025-001",
+  "agent_id": "AGENT-MUMBAI-01",
+  "customer_name": "Rohan Deshmukh",
+  "date_of_birth": "1995-05-15",
+  "destination": "INTERNATIONAL",
+  "trip_start": "2025-06-01",
+  "trip_end": "2025-06-05",
+  "plan_code": "PLUS",
+  "sum_insured": 300000
+}

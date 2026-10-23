@@ -1,0 +1,41 @@
+services:
+  # MySQL 8.0 Database (Optional)
+  mysql:
+    image: mysql:8.0
+    container_name: policyflow-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: policyflow
+      MYSQL_USER: policyflow_user
+      MYSQL_PASSWORD: policyflow_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # PostgreSQL 16 Database (Optional alternative)
+  postgres:
+    image: postgres:16-alpine
+    container_name: policyflow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: policyflow
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  # Redis Service (Optional for caching and queues)
+  redis:
+    image: redis:7-alpine
+    container_name: policyflow-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql_data:
+  pg_data:

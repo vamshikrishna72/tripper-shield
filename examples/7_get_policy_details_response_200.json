@@ -1,0 +1,94 @@
+{
+  "success": true,
+  "data": {
+    "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+    "client_request_id": "CR-TRIPPER-2025-001",
+    "agent_id": "AGENT-MUMBAI-01",
+    "customer_name": "Rohan Deshmukh",
+    "date_of_birth": "1995-05-15",
+    "destination": "INTERNATIONAL",
+    "trip_start": "2025-06-01",
+    "trip_end": "2025-06-05",
+    "plan_code": "PLUS",
+    "sum_insured": 300000,
+    "travel_days": 5,
+    "customer_age": 30,
+    "premium_amount": "225.00",
+    "currency": "INR",
+    "calculation_breakdown": {
+      "travel_days": 5,
+      "customer_age": 30,
+      "base_daily_rate": "20.00",
+      "age_multiplier": "1.00",
+      "destination_multiplier": "1.80",
+      "coverage_multiplier": "1.25",
+      "premium_amount": "225.00",
+      "currency": "INR"
+    },
+    "status": "ISSUED",
+    "provider_reference": "INS-REF-HQ89L2M19V",
+    "policy_number": "POL-20250601-A9K4P2",
+    "attempt_count": 1,
+    "last_attempted_at": "2025-05-01T10:05:00.000000Z",
+    "issued_at": "2025-05-01T10:05:01.000000Z",
+    "created_at": "2025-05-01T10:00:00.000000Z",
+    "updated_at": "2025-05-01T10:05:01.000000Z",
+    "state_history": [
+      {
+        "id": 1,
+        "from_state": null,
+        "to_state": "RECEIVED",
+        "trigger": "INTAKE_RECEIVED",
+        "reason": "Policy intake request accepted and persisted with premium snapshot",
+        "created_at": "2025-05-01T10:00:00.000000Z"
+      },
+      {
+        "id": 2,
+        "from_state": "RECEIVED",
+        "to_state": "VALIDATED",
+        "trigger": "PRE_SUBMISSION_CHECK",
+        "reason": "Policy request data validated for submission",
+        "created_at": "2025-05-01T10:05:00.000000Z"
+      },
+      {
+        "id": 3,
+        "from_state": "VALIDATED",
+        "to_state": "SUBMITTED",
+        "trigger": "DISPATCH_TO_PROVIDER",
+        "reason": "Dispatching issuance attempt #1 to insurer",
+        "created_at": "2025-05-01T10:05:00.000000Z"
+      },
+      {
+        "id": 4,
+        "from_state": "SUBMITTED",
+        "to_state": "ISSUED",
+        "trigger": "ISSUANCE_CONFIRMED",
+        "reason": "Policy issuance confirmed by provider",
+        "created_at": "2025-05-01T10:05:01.000000Z"
+      }
+    ],
+    "issuance_attempts": [
+      {
+        "id": 1,
+        "attempt_number": 1,
+        "scenario": "SUCCESS",
+        "status": "SUCCESS",
+        "request_payload": {
+          "idempotency_key": "idem_7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+          "client_request_id": "CR-TRIPPER-2025-001",
+          "plan_code": "PLUS",
+          "sum_insured": 300000,
+          "premium_amount": "225.00",
+          "travel_days": 5
+        },
+        "response_payload": {
+          "provider_reference": "INS-REF-HQ89L2M19V",
+          "policy_number": "POL-20250601-A9K4P2",
+          "status": "ISSUED"
+        },
+        "error_message": null,
+        "created_at": "2025-05-01T10:05:01.000000Z"
+      }
+    ]
+  }
+}

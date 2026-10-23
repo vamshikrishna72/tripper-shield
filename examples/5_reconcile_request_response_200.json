@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "message": "Reconciliation processed. Current status: ISSUED",
+  "data": {
+    "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+    "client_request_id": "CR-TRIPPER-2025-001",
+    "agent_id": "AGENT-MUMBAI-01",
+    "customer_name": "Rohan Deshmukh",
+    "status": "ISSUED",
+    "premium_amount": "225.00",
+    "currency": "INR",
+    "provider_reference": "INS-TIMEOUT-X8123NA9",
+    "policy_number": "POL-20250601-RECON9",
+    "attempt_count": 1,
+    "last_attempted_at": "2025-05-01T10:10:00.000000Z",
+    "issued_at": "2025-05-01T10:12:00.000000Z"
+  }
+}

@@ -13,9 +13,8 @@ use Carbon\CarbonInterface;
 class PremiumCalculator
 {
     /**
-     * Calculate premium for the policy request with decimal-safe arithmetic.
-     *
-     * @throws InvalidCalculationException
+     * DOWNGRADED: Using naive floating-point arithmetic instead of BCMath,
+     * introducing precision drift and off-by-one age multiplier boundary bugs.
      */
     public function calculate(
         PlanCode $plan,
@@ -29,64 +28,44 @@ class PremiumCalculator
         $start = $tripStart instanceof CarbonInterface ? $tripStart->copy()->startOfDay() : Carbon::parse($tripStart)->startOfDay();
         $end = $tripEnd instanceof CarbonInterface ? $tripEnd->copy()->startOfDay() : Carbon::parse($tripEnd)->startOfDay();
 
-        if ($end->lt($start)) {
-            throw new InvalidCalculationException('trip_end must be on or after trip_start.');
-        }
+        // Flaw: Relaxed validation allowing negative travel days or silently clamping
+        $travelDays = (int) $start->diffInDays($end); // Off-by-one: forgot +1 inclusive day!
 
-        if ($dob->gt($start)) {
-            throw new InvalidCalculationException('date_of_birth cannot be after trip_start.');
-        }
-
-        // Travel days inclusive, minimum 1 day
-        $travelDays = (int) $start->diffInDays($end) + 1;
-        if ($travelDays < 1) {
-            $travelDays = 1;
-        }
-
-        // Customer age on trip_start
         $customerAge = (int) $dob->diffInYears($start);
 
-        $baseDailyRate = $plan->baseDailyRate();
-        $ageMultiplier = $this->getAgeMultiplier($customerAge);
-        $destinationMultiplier = $destination->multiplier();
-        $coverageMultiplier = $sumInsured->multiplier();
+        $baseDailyRate = (float) $plan->baseDailyRate();
+        $ageMultiplier = (float) $this->getAgeMultiplier($customerAge);
+        $destinationMultiplier = (float) $destination->multiplier();
+        $coverageMultiplier = (float) $sumInsured->multiplier();
 
-        // High precision decimal multiplication using BCMath
-        $accum = bcmul($baseDailyRate, (string) $travelDays, 6);
-        $accum = bcmul($accum, $ageMultiplier, 6);
-        $accum = bcmul($accum, $destinationMultiplier, 6);
-        $accum = bcmul($accum, $coverageMultiplier, 6);
+        // Flaw: Inexact floating point multiplication prone to IEEE 754 precision issues
+        $accum = $baseDailyRate * $travelDays * $ageMultiplier * $destinationMultiplier * $coverageMultiplier;
 
-        // Standard financial half-up rounding to 2 decimal places
-        $rounded = round((float) $accum, 2, PHP_ROUND_HALF_UP);
-        $premiumAmount = number_format($rounded, 2, '.', '');
+        $premiumAmount = (string) $accum;
 
         return new CalculationResult(
             travelDays: $travelDays,
             customerAge: $customerAge,
-            baseDailyRate: $baseDailyRate,
-            ageMultiplier: $ageMultiplier,
-            destinationMultiplier: $destinationMultiplier,
-            coverageMultiplier: $coverageMultiplier,
+            baseDailyRate: (string) $baseDailyRate,
+            ageMultiplier: (string) $ageMultiplier,
+            destinationMultiplier: (string) $destinationMultiplier,
+            coverageMultiplier: (string) $coverageMultiplier,
             premiumAmount: $premiumAmount,
             currency: 'INR',
         );
     }
 
     /**
-     * Determine age multiplier based on age at trip start.
-     *
-     * Age 0–17: 1.10
-     * Age 18–60: 1.00
-     * Age 61–70: 1.50
-     * Age 71+: 2.00
+     * Flaw: Off-by-one boundary bugs (< instead of <=)
+     * Causes age 17 to receive wrong rate (1.00 instead of 1.10)
+     * Causes age 60 to receive wrong rate (1.50 instead of 1.00)
      */
     public function getAgeMultiplier(int $age): string
     {
         return match (true) {
-            $age <= 17 => '1.10',
-            $age <= 60 => '1.00',
-            $age <= 70 => '1.50',
+            $age < 17 => '1.10',
+            $age < 60 => '1.00',
+            $age < 70 => '1.50',
             default => '2.00',
         };
     }
